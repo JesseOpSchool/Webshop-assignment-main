@@ -8,10 +8,10 @@ class shopItem
 {
     constructor(price, stock, tax, cart)
     {
-        this.Mprice = price;
-        this.Mstock = stock;
-        this.Mtax = tax; 
-        this.Mcart = cart;
+        this.nPrice = price;
+        this.nStock = stock;
+        this.nTax = tax; 
+        this.nCart = cart;
     }
 }
 
@@ -19,32 +19,34 @@ let bucket = new shopItem(5, 10, 21, 0)
 let stapler = new shopItem(3, 10, 21, 0)
 let pencilHolder = new shopItem(6, 10, 21, 0)
 
-console.log(bucket.Mprice)
-
 function reload(){
     
 
-    document.getElementById("bucketPrice").innerHTML = "€" + bucket.Mprice;
-    document.getElementById("bucketStock").innerHTML = "Stock: " + bucket.Mstock;
-    document.getElementById("bucketTax").innerHTML = "Tax:" + bucket.Mtax + "%";
+    document.getElementById("bucketPrice").innerHTML = "€" + bucket.nPrice;
+    document.getElementById("bucketStock").innerHTML = "Stock: " + bucket.nStock;
+    document.getElementById("bucketTax").innerHTML = "Tax: " + bucket.nTax + "%";
 
-    document.getElementById("staplerPrice").innerHTML = "€" + stapler.Mprice;
-    document.getElementById("staplerStock").innerHTML = "Stock: " + stapler.Mstock;
-    document.getElementById("staplerTax").innerHTML = "Tax:" + stapler.Mtax + "%";
+    document.getElementById("staplerPrice").innerHTML = "€" + stapler.nPrice;
+    document.getElementById("staplerStock").innerHTML = "Stock: " + stapler.nStock;
+    document.getElementById("staplerTax").innerHTML = "Tax: " + stapler.nTax + "%";
 
-    document.getElementById("pencilHolderPrice").innerHTML = "€" + pencilHolder.Mprice;
-    document.getElementById("pencilHolderStock").innerHTML = "Stock: " + pencilHolder.Mstock;
-    document.getElementById("pencilHolderTax").innerHTML = "Tax:" + pencilHolder.Mtax + "%";
+    document.getElementById("pencilHolderPrice").innerHTML = "€" + pencilHolder.nPrice;
+    document.getElementById("pencilHolderStock").innerHTML = "Stock: " + pencilHolder.nStock;
+    document.getElementById("pencilHolderTax").innerHTML = "Tax: " + pencilHolder.nTax + "%";
 }
+
+
 
 function buttonClickBucket()
 {
-    if(bucket.Mstock > 0)
+    if(bucket.nStock > 0)
     {
-        bucket.Mcart++
-        bucket.Mstock--;
-        document.getElementById("firstItem").innerHTML = "Buckets: " + bucket.Mcart;
-        document.getElementById("totalPrice").innerHTML = bucket.Mprice;
+        
+        bucket.nCart++;
+        bucket.nStock--;
+        document.getElementById("firstItem").innerHTML = "Buckets: " + bucket.nCart;
+        calculateNewPrice(bucket.nPrice);
+        
 
     }
     else
@@ -57,11 +59,12 @@ function buttonClickBucket()
 function buttonClickStapler()
 {
      
-    if(stapler.Mstock > 0)
+    if(stapler.nStock > 0)
     {
-        stapler.Mcart++
-        stapler.Mstock--;
-        document.getElementById("secondItem").innerHTML = "Staplers: " +stapler.Mcart;
+        stapler.nCart++
+        stapler.nStock--;
+        document.getElementById("secondItem").innerHTML = "Staplers: " +stapler.nCart;
+        calculateNewPrice(stapler.nPrice);
     }
     else
     {
@@ -73,11 +76,12 @@ function buttonClickStapler()
 function buttonClickPencilHolder()
 {
     
-    if(pencilHolder.Mstock > 0)
+    if(pencilHolder.nStock > 0)
     {
-        pencilHolder.Mcart++
-        pencilHolder.Mstock--;
-        document.getElementById("thirdItem").innerHTML = "PencilHolders: " + pencilHolder.Mcart;
+        pencilHolder.nCart++
+        pencilHolder.nStock--;
+        document.getElementById("thirdItem").innerHTML = "Pencil Holders: " + pencilHolder.nCart;
+        calculateNewPrice(pencilHolder.nPrice);
     }
     else
     {
@@ -86,3 +90,7 @@ function buttonClickPencilHolder()
     reload();
 }
 
+function calculateNewPrice(secondValue) {
+    const fValue = document.getElementById("firstValue");
+    firstValue.innerHTML = parseFloat(fValue.innerHTML) + parseFloat(Math.round( (secondValue + Number.EPSILON) * 100 ) / 100 * 1.21);
+}
